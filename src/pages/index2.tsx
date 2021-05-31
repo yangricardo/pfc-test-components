@@ -8,6 +8,7 @@ import {
   CheckboxInput,
   RadioInput,
   DateTimeInput,
+  SelectInput,
 } from '@/components/form-inputs';
 
 type FormProps = {
@@ -26,6 +27,8 @@ type FormProps = {
   timeInput: Date;
   monthInput: Date;
   weekInput: Date;
+  selectInput: string | string[];
+  multiSelectInput: string | string[];
 };
 
 const formPropsSchema = Yup.object().shape({
@@ -125,6 +128,35 @@ const Home: NextPage = () => {
         <DateTimeInput name="timeInput" type="time" />
         <DateTimeInput name="monthInput" type="month" />
         <DateTimeInput name="weekInput" type="week" />
+        <SelectInput<FormProps>
+          name="selectInput"
+          label="Select Input"
+          options={[
+            {
+              value: 'oi',
+              label: 'Oi',
+            },
+            {
+              value: 'tchau',
+              label: 'Tchau',
+            },
+          ]}
+        />
+        <SelectInput<FormProps>
+          name="multiSelectInput"
+          multiple={true}
+          label="Multi Select Input"
+          options={[
+            {
+              value: 'oi',
+              label: 'Oi',
+            },
+            {
+              value: 'tchau',
+              label: 'Tchau',
+            },
+          ]}
+        />
         <input type="submit" />
       </form>
     </FormProvider>
