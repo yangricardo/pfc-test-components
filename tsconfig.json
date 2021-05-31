@@ -75,6 +75,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
+    "**/*.css",
     "src/components/cards/card-auction.component",
     "src/hooks"
   ],
