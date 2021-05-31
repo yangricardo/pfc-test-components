@@ -1,3 +1,4 @@
+const variants = ['hover', 'focus', 'active', 'checked', 'first', 'disabled', 'visited']
 module.exports = {
   mode: 'jit',
   purge: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
@@ -6,7 +7,17 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      borderStyle: variants,
+      borderColor: variants,
+      backgroundColor: variants,
+      ringColor: variants,
+      ringWidth: variants,
+      outline: variants,
+      borderWidth: variants,
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }

@@ -1,9 +1,53 @@
 import { NextPage } from 'next';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  DeepMap,
+  FieldError,
+  FieldPath,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  SubmitHandler,
+  useForm,
+  UseFormRegister,
+} from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FormEvent, FormEventHandler, useEffect } from 'react';
 
-type Inputs = {
+type FormProps = {
   example: string;
-  exampleRequired: string;
+};
+
+const formPropsSchema = Yup.object().shape({
+  example: Yup.string().required(),
+});
+
+const TextInput = <TFieldValues extends FieldValues>({
+  label,
+  name,
+  register,
+  options,
+  errors,
+}: {
+  label?: string;
+  name: Path<TFieldValues>;
+  register: UseFormRegister<TFieldValues>;
+  options?: RegisterOptions<TFieldValues, FieldPath<TFieldValues>>;
+  errors: DeepMap<TFieldValues, FieldError>;
+}): any => {
+  const error = errors[name] as FieldError | undefined;
+  return (
+    <div className="w-full flex flex-col space-y-2">
+      {label && <label htmlFor={name}>{label}</label>}
+      <input
+        {...register(name, options)}
+        name={name}
+        type="text"
+        className={`p-2 ring-2 ring-gray-400 focus:ring-green-500 active:ring-green-500 rounded outline-none focus:outline-none active:outline-none hover:outline-none`}
+      />
+      {error && <span>{error?.message}</span>}
+    </div>
+  );
 };
 
 const Home: NextPage = () => {
@@ -12,22 +56,31 @@ const Home: NextPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm<FormProps>({
+    resolver: yupResolver(formPropsSchema),
+    defaultValues: { example: 'default value' },
+  });
+  const onSubmit: SubmitHandler<FormProps> = (data) => console.log(data);
+  const watchFields = watch();
 
-  console.log(watch('example')); // watch input value by passing the name of it
+  useEffect(() => console.log(watchFields), [watchFields]);
 
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <input defaultValue="test" {...register('example')} />
-
-      {/* include validation with required or other standard HTML validation rules */}
-      <input {...register('exampleRequired', { required: true })} />
-      {/* errors will return when field validation fails  */}
-      {errors.exampleRequired && <span>This field is required</span>}
-
+    <form
+      className={`flex flex-col w-full space-y-2 p-2`}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <TextInput<FormProps>
+        name={'example'}
+        register={register}
+        // options={{
+        //   required: {
+        //     value: true,
+        //     message: 'This Field is Required',
+        //   },
+        // }}
+        errors={errors}
+      />
       <input type="submit" />
     </form>
   );
