@@ -32,7 +32,7 @@ export const RadioInput = <TFieldValues extends FieldValues>({
             {...register(name)}
             name={name}
             value={option.value}
-            className="form-Radio rounded text-green-500"
+            className="form-radio rounded text-green-500 "
           />
           <label htmlFor={name}>{option.label}</label>
         </div>

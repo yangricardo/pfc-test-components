@@ -34,7 +34,7 @@ export const TypedInput = <TFieldValues extends FieldValues>({
   const error = formState.errors[name] as FieldError | undefined;
   const className = `${
     type !== 'textarea' ? 'form-input' : 'form-textarea'
-  } p-2 ring-2 ring-gray-400 focus:ring-green-500 active:ring-green-500 rounded outline-none focus:outline-none active:outline-none hover:outline-none`;
+  } p-2 border-none ring-1 ring-gray-400 hover:ring-green-500 focus:ring-green-500 active:ring-green-500 hover:ring-2 focus:ring-2 active:ring-2 rounded outline-none transition duration-300`;
   const onBlur = async () => await trigger(name);
 
   const PasswordStrengthBar = useCallback(() => {
@@ -49,7 +49,7 @@ export const TypedInput = <TFieldValues extends FieldValues>({
   }, [type, name, watch]);
 
   return (
-    <div className="w-full flex flex-col space-y-2">
+    <div className="w-full flex flex-col space-y-2 border-none transi">
       {label && <label htmlFor={name}>{label}</label>}
       {type !== 'textarea' ? (
         <>

@@ -7,6 +7,7 @@ import {
   TypedInput,
   CheckboxInput,
   RadioInput,
+  DateTimeInput,
 } from '@/components/form-inputs';
 
 type FormProps = {
@@ -21,6 +22,10 @@ type FormProps = {
   checkboxInput: string;
   radioInput: string;
   dateTimeLocalInput: Date;
+  dateTimeInput: Date;
+  timeInput: Date;
+  monthInput: Date;
+  weekInput: Date;
 };
 
 const formPropsSchema = Yup.object().shape({
@@ -116,11 +121,10 @@ const Home: NextPage = () => {
             },
           ]}
         />
-        <input
-          type="datetime-local"
-          placeholder="datetime-local"
-          {...methods.register('dateTimeLocalInput', {})}
-        />
+        <DateTimeInput name="dateTimeLocalInput" type="datetime-local" />
+        <DateTimeInput name="timeInput" type="time" />
+        <DateTimeInput name="monthInput" type="month" />
+        <DateTimeInput name="weekInput" type="week" />
         <input type="submit" />
       </form>
     </FormProvider>
