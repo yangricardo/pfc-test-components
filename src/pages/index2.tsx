@@ -9,6 +9,7 @@ import {
   RadioInput,
   DateTimeInput,
   SelectInput,
+  RichTextInput,
 } from '@/components/form-inputs';
 
 type FormProps = {
@@ -29,6 +30,7 @@ type FormProps = {
   weekInput: Date;
   selectInput: string | string[];
   multiSelectInput: string | string[];
+  richTextInput: string;
 };
 
 const formPropsSchema = Yup.object().shape({
@@ -157,6 +159,7 @@ const Home: NextPage = () => {
             },
           ]}
         />
+        <RichTextInput<FormProps> name="richTextInput" />
         <input type="submit" />
       </form>
     </FormProvider>
